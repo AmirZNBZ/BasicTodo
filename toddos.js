@@ -5,67 +5,50 @@ const todoPriority = document.getElementById("todo-priority");
 const todoWhen = document.getElementById("todo-when");
 const addTodo = document.getElementById("add-todo");
 
-//  Selector Todo Container
-// const todoCardsContainer = document.getElementsByClassName("todo-cards-container");
-// const todoCard = document.getElementsByClassName("card");
-// const cardTitle = document.getElementsByClassName("card-title");
-// const actionIcons = document.getElementsByClassName("icons");
-// const cardContent = document.getElementsByClassName("card-content");
-// const cardFooter = document.getElementsByClassName("card-footer");
-
 // Functions
 addTodo.addEventListener("click", (e) => {
   e.preventDefault();
 
   const todoCardsContainer = document.querySelector(".todo-cards-container");
 
-  const todoCard = document.createElement("div");
-  todoCard.classList.add("card");
+  const todoCard = createElementFunction("div");
+  getAddClassFunction(todoCard, "card");
 
-  const cardTitle = document.createElement("div");
+  const cardTitle = createElementFunction("div");
   todoCard.appendChild(cardTitle);
-  cardTitle.classList.add("card-title");
+  getAddClassFunction(cardTitle, "card-title");
 
-  const titleHeader = document.createElement("h3");
+  const titleHeader = createElementFunction("h3");
 
-  const priorityIcons = document.createElement("i");
-  priorityIcons.classList.add("fa");
-  if (todoPriority.value === "high") {
-    priorityIcons.classList.add("fa-angle-double-up");
-    priorityIcons.style.color = "red";
-    priorityIcons.style.fontSize = "28px";
-  } else if (todoPriority.value === "medium") {
-    priorityIcons.classList.add("fa-angle-double-up");
-    priorityIcons.style.color = "yellow";
-    priorityIcons.style.fontSize = "26px";
-  } else {
-    priorityIcons.classList.add("fa-angle-up");
-    priorityIcons.style.color = "green";
-    priorityIcons.style.fontSize = "24px";
-  }
+  const priorityIcons = createElementFunction("i");
+  getAddClassFunction(priorityIcons, "fa");
+
+  // Check Todo priority
+  checkTodoPriorityFunction(todoPriority, priorityIcons);
+
   // Check if Title is Empty
   if (!todoTitle.value) {
     errFieldName = todoTitle.placeholder.replace("...", " ");
     msg = "Empty, Please Fill The" + errFieldName;
-    createToast(errFieldName, msg, 3000);
+    createToastFunction(errFieldName, msg, 3000);
     return;
   }
-  
-  titleHeader.innerText = todoTitle.value;
+
+  titleHeader.textContent = todoTitle.value;
   cardTitle.appendChild(titleHeader);
   cardTitle.appendChild(priorityIcons);
 
-  const actionIcons = document.createElement("div");
-  actionIcons.classList.add("icons");
+  const actionIcons = createElementFunction("div");
+  getAddClassFunction(actionIcons, "icons");
 
   // Trash And Complete Icon
-  const checkCircle = document.createElement("i");
-  checkCircle.classList.add("fa");
-  checkCircle.classList.add("fa-check-circle");
+  const checkCircle = createElementFunction("i");
+  getAddClassFunction(checkCircle, "fa");
+  getAddClassFunction(checkCircle, "fa-check-circle");
 
-  const trash = document.createElement("i");
-  trash.classList.add("fa");
-  trash.classList.add("fa-trash");
+  const trash = createElementFunction("i");
+  getAddClassFunction(trash, "fa");
+  getAddClassFunction(trash, "fa-trash");
 
   actionIcons.appendChild(checkCircle);
   actionIcons.appendChild(trash);
@@ -74,47 +57,42 @@ addTodo.addEventListener("click", (e) => {
   trash.addEventListener("click", deleteFunction);
   checkCircle.addEventListener("click", doneFunction);
 
-  const divider = document.createElement("hr");
+  // Divider
+  const divider = createElementFunction("hr");
   todoCard.appendChild(divider);
 
   //  card content
-  const cardContentMain = document.createElement("div");
-  cardContentMain.classList.add("card-content");
+  const cardContentMain = createElementFunction("div");
+  getAddClassFunction(cardContentMain, "card-content");
 
-  const cardContent = document.createElement("p");
-  cardContent.innerText = todoDescription.value;
+  const cardContent = createElementFunction("p");
+  cardContent.textContent = todoDescription.value;
 
   cardContentMain.appendChild(cardContent);
   todoCard.appendChild(cardContentMain);
 
-  const cardFooter = document.createElement("div");
-  cardFooter.classList.add("card-footer");
+  // Card Footer
+  const cardFooter = createElementFunction("div");
+  getAddClassFunction(cardFooter, "card-footer");
 
-  // Close icon in btns
-  const close = document.createElement("i");
-  close.classList.add("fa");
-  close.classList.add("fa-times");
+  // Close icon in Buttons
+  const close = createElementFunction("i");
+  getAddClassFunction(close, "fa");
+  getAddClassFunction(close, "fa-times");
 
-  const forWhenBtn = document.createElement("button");
-  forWhenBtn.classList.add("footer-btn");
+  const forWhenBtn = createElementFunction("button");
+  getAddClassFunction(forWhenBtn, "footer-btn");
   forWhenBtn.setAttribute("type", "button");
-  forWhenBtn.innerText = todoWhen.value;
+  forWhenBtn.textContent = todoWhen.value;
   forWhenBtn.insertBefore(close, forWhenBtn.firstChild);
 
-  const completedBtn = document.createElement("button");
-  completedBtn.classList.add("footer-btn");
-  completedBtn.classList.add("uncompleted");
+  const completedBtn = createElementFunction("button");
+  getAddClassFunction(completedBtn, "footer-btn");
+  getAddClassFunction(completedBtn, "uncompleted");
   completedBtn.setAttribute("type", "button");
-  completedBtn.innerText = "UNComplete";
+  completedBtn.textContent = "UNComplete";
   const closeComplete = close.cloneNode(true);
   completedBtn.insertBefore(closeComplete, completedBtn.firstChild);
-
-  // const activeBtn = document.createElement("button");
-  // activeBtn.classList.add("footer-btn");
-  // activeBtn.setAttribute("type", "button");
-  // activeBtn.innerText = "active";
-  // const closeActive = close.cloneNode(true);
-  // activeBtn.insertBefore(closeActive, activeBtn.firstChild);
 
   cardFooter.appendChild(forWhenBtn);
   cardFooter.appendChild(completedBtn);
@@ -124,16 +102,21 @@ addTodo.addEventListener("click", (e) => {
 
   todoCardsContainer.appendChild(todoCard);
 
-  todoTitle.value = "";
-  todoDescription.value = "";
-  todoPriority.value = "";
-  todoWhen.value = "";
+  // Clear Input Value After Add Todo
+  clearFunction(todoTitle);
+  clearFunction(todoDescription);
+  clearFunction(todoPriority);
+  clearFunction(todoWhen);
   todoTitle.focus();
 });
 
+const clearFunction = (element) => {
+  element.value = "";
+};
+
 const deleteFunction = (e) => {
   const todoCard = e.target.closest(".card");
-  todoCard.classList.add("todo-delete");
+  getAddClassFunction(todoCard, "todo-delete");
 
   if (todoCard) {
     todoCard.addEventListener("transitionend", function () {
@@ -144,12 +127,12 @@ const deleteFunction = (e) => {
 
 const doneFunction = (e) => {
   const containerDone = document.querySelector(".container-done");
-  const todoCard = e.target.closest(".card");
   const btnUncompleted = document.querySelector(".uncompleted");
+  const todoCard = e.target.closest(".card");
 
-  btnUncompleted.classList.add("completed");
+  getAddClassFunction(btnUncompleted, "completed")
   btnUncompleted.classList.remove("uncompleted");
-  btnUncompleted.innerText = "Completed";
+  btnUncompleted.textContent = "Completed";
 
   e.target.style.color = "rgb(2, 153, 65)";
   e.target.style.pointerEvents = "none";
@@ -162,12 +145,12 @@ const doneFunction = (e) => {
 };
 
 // Create Toast Function
-const createToast = (fieldErr, msg, duration) => {
+const createToastFunction = (fieldErr, msg, duration) => {
   const main = document.querySelector(".body");
-  const toastContainer = document.createElement("div");
+  const toastContainer = createElementFunction("div");
   toastContainer.classList.add("toast-container");
 
-  const toastContent = document.createElement("div");
+  const toastContent = createElementFunction("div");
 
   setTimeout(function () {
     toastContainer.classList.add("toast-container__show");
@@ -184,5 +167,28 @@ const createToast = (fieldErr, msg, duration) => {
   toastContainer.appendChild(toastContent);
 
   main.appendChild(toastContainer);
+};
 
+const checkTodoPriorityFunction = (todoPriorityInput, icons) => {
+  if (todoPriorityInput.value === "high") {
+    icons.classList.add("fa-angle-double-up");
+    icons.style.color = "red";
+    icons.style.fontSize = "24px";
+  } else if (todoPriorityInput.value === "medium") {
+    icons.classList.add("fa-angle-up"); //change to -- ro ham 
+    icons.style.color = "orange";
+    icons.style.fontSize = "24px";
+  } else {
+    icons.classList.add("fa-angle-down");
+    icons.style.color = "#007fff";
+    icons.style.fontSize = "24px";
+  }
+};
+
+const createElementFunction = (elementName) => {
+  return document.createElement(elementName);
+};
+
+const getAddClassFunction = (element, className) => {
+  element.classList.add(className);
 };

@@ -13,7 +13,6 @@ main {
   max-width: 1360px;
   position: relative;
   overflow: hidden;
-
 }
 
 .section1 {
@@ -41,6 +40,7 @@ main {
 #todo-description,
 #todo-when,
 #todo-priority {
+  resize: none;
   width: 500px;
   padding: 0.5rem;
   margin-bottom: 1rem;
@@ -405,6 +405,7 @@ ul {
   padding: 0 5px;
   position: fixed;
   max-width: 350px;
+  border-radius: 5px;
   align-items: center;
   justify-content: center;
   transition: opacity 0.3s;
